@@ -16,7 +16,7 @@ Principles that require wider interpretation are left to everyone's personal sub
 them is a function of how much stakeholders contribute time and energy in a best effort.
 
 Softwork activation discussion or primitives deployment timeline are considered as off-topic for this
-project. 
+project.
 
 The repository organization proposed is the following:
 - use-cases: use-cases presentations, contracting primitives usage justification, use-case analysis
@@ -25,11 +25,9 @@ The repository organization proposed is the following:
  
 It should be noted that use-case analysis (economic, security, privacy, ... trade-offs) aims to be
 deliberately exhaustive, as a use-case architecture could potentially be revealed to be
-non-functional or present a trade-off downside nullifying the technical interest and hence reducing the
-relevance of the contracting primitive.
+non-functional or present a trade-off downside nullifying the technical interest and hence reducing the relevance of the contracting primitive.
 
-Regular meetings will be scheduled starting in November 2022. As of block #753360, the
-communication channel(s) where to host them has not yet found consensus.
+Regular meetings are organized. See #bitcoin-contracting-primitives-wg on Libera Chat. Past logs are [available](meetings/README.md).
 
 Pull requests, issues and reviews are welcome, seeking feedback from community stakeholders.
 
