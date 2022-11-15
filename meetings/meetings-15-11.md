@@ -1,3 +1,4 @@
+```
 18:00 < ariard> #startmeeting
 18:00 < ariard> hi!
 18:00 < yancy> hi
@@ -133,3 +134,4 @@
 18:59 < ariard> if you have suggestions on the timing (6 PM UTC might not fit everyone let it know here or on the ML)
 19:00 < ariard> for next time, i'll do my best to do the archiving work of tracking every known covenants proposal and contracting protocol use-cases, be sure we're not forgetting anything
 19:00 < ariard> #endmeeting
+```
