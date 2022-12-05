@@ -13,3 +13,4 @@ such as transaction introspection, covenants, extended sighash malleability.
 - [OP_TXHASH](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-January/019813.html)
 - [OP_EVICT](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-February/019926.html)
 - [OP_CHECKOUTPUTCOVENANTVERIFY](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-November/021182.html)
+- [Inherited IDs](https://raw.githubusercontent.com/JohnLaw2/btc-iids/main/iids14.pdf)
