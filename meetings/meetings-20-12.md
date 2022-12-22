@@ -1,4 +1,71 @@
 ```
+18:00 <halseth> hi :)
+18:00 <ariard> #startmeeting
+18:00 <ariard> hi!
+18:00 <_aj_> hi
+18:01 <ariard> today soft agenda is browsing all the contracting protocol use-cases and covenant/contracting primitives which have been proposed during the last years :)
+18:01 <bucko> howdy!
+18:01 <ariard> and then we might have a round
+18:01 <ariard> on listening on what everyone has been working on, the researcher blockers etc
+18:02 <ariard> so if everyone is good, let's start with the primitives
+18:02 <halseth> yes 👍
+18:02 <ariard> https://github.com/ariard/bitcoin-contracting-primitives-wg/tree/main/primitives
+18:03 <ariard> so we have anyprevout, aka bip 118: https://github.com/bitcoin/bips/blob/master/bip-0118.mediawiki
+18:04 <ariard> afaict, the main feature is to allow for signatures to not commit to the exact UTXO being spent
+18:04 <ariard> then we have TAPROOT_LEAF_UPDATE_VERIFY
+18:05 <ariard> afaik the most detailed description is here: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-September/019419.html
+18:05 <ariard> (there is no code or BIP yet)
+18:05 <ariard> (if anyone has questions or remarks on primitives, feel free to grab the mic)
+18:06 <ariard> then we have CHECK_TEMPLATE_VERIFY : https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki
+18:06 <halseth> I have a qq on bip 118 and CTV. I read that ANYPREVOUT can "simulate" CTV in some sense. Anybody have a quick explanation how?
+18:07 <ariard> so the idea is to lock the sig in the spent scriptpubkey 
+18:07 <ariard> you compute your APO signature where the digest doesn't commit to the spent outpoint
+18:07 <_aj_> with CTV, you make the scriptPubKey be "hash OP_CTV". to do the same thing with APO, you calculate a signature over the same hash with the secp256k1 generator as the public key (ie a private key of "1"), and make the scriptPubKey be "sig G CHECKSIG"
+18:08 <ariard> and "sig G CHECKSIG" should be your only path if you would like a "hard" covenant without escape path
+18:08 <_aj_> SIGHASH_ANYPREVOUTANYSCRIPT|SIGHASH_ALL signatures commit to largely the same information as OP_CTV hashes, so this mostly works okay
+18:08 <halseth> Ah, so you upfront lock in the exact signature == exact tx that can spend the UTXO
+18:08 <halseth> clever
+18:09 <ariard> and this should work recursively for a chain of transactions, if you start by your bottom states, i think
+18:09 <_aj_> if you want to avoid an escape path, you need to a NUMS point as your taproot internal pubkey too (APO is via tapscript only, CTV is via segwit v0, p2sh, bare script as well)
+18:09 <halseth> Great, thanks for the explanation!
+18:10 <ariard> right, otherwise the consensus of the signers for your shared-utxo can exit the tapscript
+18:10 <bucko> There was a nice comparison of building a jamesob simple vault with each proposal
+18:10 <bucko> https://github.com/darosior/simple-anyprevout-vault
+18:10 <ariard> https://github.com/jamesob/simple-ctv-vault
+18:10 <_aj_> the CTV PR against core got rebased and closed the other day, if anyone didn't notice -- https://github.com/bitcoin/bitcoin/pull/21702#issuecomment-1356016792
+18:11 <ariard> though the patch has been merged against inquisition iirc?
+18:11 <_aj_> CTV and APO are both merged against inquisition, and usable on signet today
+18:11 <_aj_> https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-December/021275.html
+18:12 <_aj_> https://mempool.space/signet/tx/ef8b3351def1163da97f51b8d2cba53c9671dfbd69ae4b1278506b9282bfbdea <-- is an APOAS spend, re-using signatures for the same scriptPubKey across different input utxos
+18:13 <ariard> are there mempool changes required on inquisition to test the darosior's vault version or the jamesob's one ?
+18:13 <jamesob> ariard: not for the CTV vault, no
+18:13 <ariard> yeah just checked, basic anchor output
+18:14 <_aj_> i think eltoo is the only app wanting further relay changes?
+18:14 <halseth> aj: it is reusing the same signature, but it goes into every witness, no?
+18:14 <ariard> hmmmm, i think last year there were discussion getting rid of the dust threshold for some anchoring use-cases
+18:14 <halseth> for each input*
+18:15 <instagibbs> 0-value anchors for eltoo, and the optional annex usage
+18:15 <bucko> would v3 transactions with ephemeral anchors be useful for that? 
+18:16 <ariard> https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-August/019307.html
+18:16 <gleb> hi! took 15 minutes to restart the irc thing... catching up now
+18:16 <instagibbs> yeah was the inspiration for the idea bucko 
+18:16 <jamesob> bucko: yeah, absolutely. Ephemeral anchors (or sponsors) basically make vaults work
+18:16 <bucko> nice!
+18:16 <halseth> ephemeral anchors <3
+18:17 <bucko> +1
+18:17 <jamesob> otherwise you have to do really awkward things like pre-generate numerous txns anticipating feerate levels, since you need to be able to broadcast an initial transaction (and clear the min mempool feerate) to even do CPFP with an anchor
+18:17 <instagibbs> so, package relay -> package CPFP/RBF -> V3 -> ephemeral anchors 
+18:18 <instagibbs> compared to Core master
+18:18 <jamesob> so package relay + ephemeral anchors are really almost prerequisites for any contracting pattern IMO
+18:18 <_aj_> nah, just assume the mempool's going to stay empty and feerates will always be 1s/vb
+18:19 <halseth> yep, also to (finally) get rid of the LN commitment fee lol
+18:19 <ariard> well ephemeral anchors should scale well to multi-party pattern thanks to package-relay (otherwise you're running out of carve-out exemptions)
+18:19 <jamesob> _aj_: just as long as binance doesn't decide to do PoR again we're good
+18:19 <instagibbs> tbast was telling me they have tons of channels that counterparties have gone offline, they're paying way too much in fees hehe
+18:19 <instagibbs> holding them open just in case they come back...
+18:20 <ariard> sure, but i think they're pretty conservative w.r.t mempool min fees
+18:20 <instagibbs> during a fee spike*
+18:20 <ariard> like right now _without_ package relay if mempools start to be congestioned and your pre-signed feerate is under... you're screwed
 18:21 < jamesob> yup
 18:21 < ariard> keeping with the enumeration of primitives
 18:21 < ariard> we have SIGHASH_GROUP, detailed here: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-July/019243.html
