@@ -16,3 +16,4 @@ such as transaction introspection, covenants, extended sighash malleability.
 - [Inherited IDs](https://raw.githubusercontent.com/JohnLaw2/btc-iids/main/iids14.pdf)
 - [SIGHASH_ANYAMOUNT](https://github.com/ariard/bitcoin/commit/ec103f796c78c5aabffcea600fcbfa78904b836a#diff-a0337ffd7259e8c7c9a7786d6dbd420c80abfa1afdb34ebae3261109d9ae3c19R2072)
 - [Singletons](https://chialisp.com/singletons/)
+- [OP_VAULT](https://github.com/bitcoin/bitcoin/pull/26857)
