@@ -5,7 +5,7 @@ such as transaction introspection, covenants, extended sighash malleability.
 
 - [SIGHASH_ANYPREVOUT](https://github.com/ariard/bitcoin-contracting-primitives-wg.git)
 - [TAPROOT_LEAF_UPDATE_VERIFY](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-September/019419.html)
-- [OP_CHECK_TEMPLATE_VERIFY](https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki)
+- [OP_CHECKTEMPLATEVERIFY](https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki)
 - [Taproot Annex](https://github.com/bitcoin-inquisition/bitcoin/pull/9)
 - [SIGHASH_GROUP](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-July/019243.html)
 - [OP_CHECKSIGFROMSTACK](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-July/019192.html)
