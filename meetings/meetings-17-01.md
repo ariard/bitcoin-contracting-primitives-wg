@@ -1,3 +1,4 @@
+```
 18:00 < ariard> #startmeeting
 18:02 < ariard> for the ones who are not familiar with the concept, "vaults" can be described as a generic technique to designate a secure storage of Bitcoin funds
 18:03 < ariard> with pre-defined spending policy enforced by covenants
@@ -138,3 +139,4 @@
 18:59 < JohnLaw> I'd propose scaling the creation of channels beyond the bound possible with signatures, as signatures require each of N parties to approve the other N-1 parties
 19:00 < ariard> i think you would need some ZKP for validity rollups, to verify the batch. And then you enter in all the ZKP tradeoffs...
 19:00 < ariard> #endmeeting
+```
