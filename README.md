@@ -27,7 +27,13 @@ It should be noted that use-case analysis (economic, security, privacy, ... trad
 deliberately exhaustive, as a use-case architecture could potentially be revealed to be
 non-functional or present a trade-off downside nullifying the technical interest and hence reducing the relevance of the contracting primitive.
 
-Regular meetings are organized. See #bitcoin-contracting-primitives-wg on Libera Chat. Past logs are [available](meetings/README.md).
+Regular meetings are organized on #bitcoin-contracting-primitives-wg on Libera Chat.
+
+The past meetings logs are available: [available](meetings/README.md).
+
+Additionally, there are more Libera Chat channels to discuss advanced plumbery:
+- ##eltoo (anyprevout & eltoo constructions)
+- #coinpool-dev (payments pools/coin pools)
 
 Pull requests, issues and reviews are welcome, seeking feedback from community stakeholders.
 
