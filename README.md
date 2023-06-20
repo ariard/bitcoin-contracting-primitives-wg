@@ -1,6 +1,7 @@
 # Bitcoin Contracting Primitives Working Group
 
-THIS PROJECT IS "UP FOR GRABS" - FEEL FREE TO FORK OR ASK MAINTENANCE RIGHTS.
+THIS PROJECT IS "UP FOR GRABS" - FEEL FREE TO FORK OR ASK MAINTENANCE RIGHTS
+(edit block 00000000000000000001a38f0cc03b0ab6fa09e3cd2edfdcb9cdfa2cf1a5ec0f: well I'll probably resume the meetings after the summer just busy with other things for now)
 
 The goal of this project is to host R&D production of the Bitcoin protocol development
 community around contracting primitives powering new class of Bitcoin use-cases (vaults,
